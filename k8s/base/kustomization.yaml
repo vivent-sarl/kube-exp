@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - quota.yaml
+#  - vpa.yaml
+  - apps/cpu-hog.yaml
+  - apps/app-a.yaml
+  - apps/app-b.yaml
+  - apps/stress-test.yaml  # Apply manually or exclude by default

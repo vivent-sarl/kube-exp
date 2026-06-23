@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-hog
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpu-hog
+  template:
+    metadata:
+      labels:
+        app: cpu-hog
+    spec:
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: demo
+      containers:
+      - name: stress
+        image: alexeiled/stress-ng
+        args: ["--cpu", "1", "--cpu-load", "10", "--vm", "1", "--vm-bytes", "100M", "--vm-keep"]
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "30m"
+          limits:
+            memory: "300Mi"

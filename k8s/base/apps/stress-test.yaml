@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stress-test-app-a-b
+  namespace: demo
+spec:
+  replicas: 2  # Scaled up manually when needed
+  selector:
+    matchLabels:
+      app: stress-test-app-a-b
+  template:
+    metadata:
+      labels:
+        app: stress-test-app-a-b
+    spec:
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: demo
+      containers:
+      - name: stress-client
+        image: williamyeh/hey
+        command:
+          - /bin/sh
+          - -c
+          - |
+            /hey -z 180s -c 50 -q 1000 http://app-a-service:8080/api/endpoint &
+            /hey -z 180s -c 50 -q 1000 http://app-b-service:8080/api/endpoint &
+            wait
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "10m"
+          limits:
+            memory: "300Mi"

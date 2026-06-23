@@ -1,0 +1,21 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: cpu-hog-vpa
+  namespace: demo
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cpu-hog
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: stress
+      minAllowed:
+        cpu: "10m"
+        memory: "100Mi"
+      maxAllowed:
+        cpu: "1"
+        memory: "500Mi"

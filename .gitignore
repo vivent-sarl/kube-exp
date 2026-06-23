@@ -1,0 +1,9 @@
+/.venv/
+/autoscaler/
+.terraform
+.terraform.lock.hcl
+.idea
+*.info
+*.tfstate
+*.backup
+/terraform/environments/exp/*.tfvars
