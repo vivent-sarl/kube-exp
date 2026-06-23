@@ -3,7 +3,8 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - quota.yaml
+  - kube-configs.yaml
+#  - quota.yaml
 #  - vpa.yaml
   - apps/cpu-hog.yaml
   - apps/app-a.yaml
